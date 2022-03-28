@@ -4,7 +4,7 @@ document.querySelector("#addMovie").addEventListener("click", createMovie)
 
 // GET-Anfrage
 async function getMovies() {
-    const res = await fetch("http://10.20.1.224:3000/movies");
+    const res = await fetch(host + "/movieList");
     const data = res.json();
     return data;
 }
@@ -36,7 +36,7 @@ async function createMovie(e) {
 
 // DELETE-Anfrage
 async function deleteMovie(id) {
-    const res = await fetch(url + id, {
+    const res = await fetch(host + "/movieList/" + id, {
         method: "DELETE"
     });
     console.log(res);
@@ -44,7 +44,7 @@ async function deleteMovie(id) {
 
 // PUT-Anfrage
 async function putMovie(id) {
-    const res = await fetch(url + id, {
+    const res = await fetch(host + "/movieList/" + id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -55,7 +55,7 @@ async function putMovie(id) {
 
 // PATCH-Anfrage - ergänzt Einträge
 async function patchMovie(id) {
-    const res = await fetch(url + id, {
+    const res = await fetch(host + "/movieList/" + id, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"
@@ -67,7 +67,7 @@ async function patchMovie(id) {
 
 // Hilfsfunktion zur Erzeugung einer neuen ID:
 function generateID() {
-    return new Date().toISOString().replace(/[\D]/g, "") + Math.random();
+    return (Date.now() + Math.random()).toString(36);
 }
 
 // Hilfsmethode zum Feststellen, ob ein Film mit gegebenem Titel existiert:
@@ -81,4 +81,10 @@ async function movieExists(searchTitle) {
     return false;
 }
 
+const patchData = {
+    ip: "12345"
+}
 
+
+
+deleteMovie("l1b3vna1.qtd");
