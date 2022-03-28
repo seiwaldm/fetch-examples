@@ -1,4 +1,6 @@
-const url = "http://10.20.1.224:3000/movies/";
+const host = "http://localhost:3000";
+document.querySelector("#addMovie").addEventListener("click", createMovie)
+
 
 // GET-Anfrage
 async function getMovies() {
@@ -8,8 +10,20 @@ async function getMovies() {
 }
 
 // POST-Anfrage
-async function createMovie(movie) {
-    const res = await fetch("http://10.20.1.224:3000/movies", {
+async function createMovie(e) {
+
+    e.preventDefault();
+
+    //erstelle ein neues Film-Objekt mit den Daten aus dem html-Formular:
+    const movie = {
+        id: generateID(),
+        title: document.querySelector("#title").value,
+        year: document.querySelector("#year").value,
+        uploader: document.querySelector("#uploader").value,
+        ip: document.querySelector("#ip").value,
+    }
+
+    const res = await fetch(host + "/movieList", {
         method: "POST",
         headers: {
             "Content-Type": 'application/json'
@@ -53,7 +67,7 @@ async function patchMovie(id) {
 
 // Hilfsfunktion zur Erzeugung einer neuen ID:
 function generateID() {
-    return new Date().toISOString().replace(/[\D]/g, "");
+    return new Date().toISOString().replace(/[\D]/g, "") + Math.random();
 }
 
 // Hilfsmethode zum Feststellen, ob ein Film mit gegebenem Titel existiert:
@@ -67,31 +81,4 @@ async function movieExists(searchTitle) {
     return false;
 }
 
-const newMovie = {
-    id: generateID(),
-    title: "Moon Knight",
-    year: 2022,
-    cast: [],
-    uploader: "Seiwald"
-};
 
-const patchData = {
-    year: 2022,
-    genres: "Comedy",
-    title: "Brooklyn 99",
-    uploader: "Seiwald"
-};
-
-const correctedData = {
-    title: "A new movie",
-    genres: "Drama",
-    cast: ["Migei", "Seppei", "Pazei", "Manei", "Seli"],
-    uploader: "Chef"
-}
-// console.log(newMovie);
-// deleteMovie("20220321085158527");
-// createMovie(newMovie);
-// patchMovie("20220321090523524");
-// putMovie("20220321090523524")
-
-console.log(new )
