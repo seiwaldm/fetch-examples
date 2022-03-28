@@ -85,6 +85,3 @@ const patchData = {
     ip: "12345"
 }
 
-
-
-deleteMovie("l1b3vna1.qtd");
